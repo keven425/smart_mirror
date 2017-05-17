@@ -24,7 +24,7 @@ class FaceTracking(object):
         # ret, frame = self.video_capture.read()
         frame = self.video_stream.read()
 
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         faces = self.face_cascade.detectMultiScale(
             gray,
