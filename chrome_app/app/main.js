@@ -35,6 +35,6 @@ function connect() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // console.log('connecting to nativemain');
-    // connect();
+    console.log('connecting to nativemain');
+    connect();
 });
