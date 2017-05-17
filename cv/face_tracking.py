@@ -53,7 +53,8 @@ class FaceTracking(object):
     def _cleanup(self):
         print('cleaning up')
         # When everything is done, release the capture
-        self.video_capture.release()
+        # self.video_capture.release()
+        self.video_stream.stop()
         cv2.destroyAllWindows()
 
 if __name__ == '__main__':
