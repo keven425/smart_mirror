@@ -4,21 +4,27 @@
 import cv2
 import sys
 import atexit
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+from camera import PiVideoStream
+
 
 CASC_PATH = '/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
 
 class FaceTracking(object):
     
     def __init__(self):
-        self.video_capture = cv2.VideoCapture(0)
+        # self.video_capture = cv2.VideoCapture(0)
+        self.video_stream = PiVideoStream().start()
         self.face_cascade = cv2.CascadeClassifier(CASC_PATH)
         atexit.register(self._cleanup)
 
     def detect_faces(self):
         # Capture frame-by-frame
-        ret, frame = self.video_capture.read()
+        # ret, frame = self.video_capture.read()
+        frame = self.video_stream.read()
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         faces = self.face_cascade.detectMultiScale(
             gray,
