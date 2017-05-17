@@ -13,6 +13,6 @@ if __name__ == '__main__':
         # if !face_detected and face_tracking.detect_faces():
         if face_tracking.detect_faces():
             face_detected = True
-            chrome_message.send_message('{"echo": "face_detected"}')
+            chrome_message.send_message('{"action": "face_detected"}')
 
     sys.exit(0)

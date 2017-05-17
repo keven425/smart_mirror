@@ -4,25 +4,33 @@
 import cv2
 import sys
 import atexit
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-from camera import PiVideoStream
+import environment
 
+if environment.is_mac():
+    CASC_PATH = '/usr/local/opt/opencv/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
+else: # raspberry pi
+    from picamera.array import PiRGBArray
+    from picamera import PiCamera
+    from camera import PiVideoStream
 
-CASC_PATH = '/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
+    CASC_PATH = '/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
 
 class FaceTracking(object):
     
     def __init__(self):
-        # self.video_capture = cv2.VideoCapture(0)
-        self.video_stream = PiVideoStream().start()
+        if environment.is_mac():
+            self.video_capture = cv2.VideoCapture(0)
+        else: # raspberry pi
+            self.video_stream = PiVideoStream().start()
         self.face_cascade = cv2.CascadeClassifier(CASC_PATH)
         atexit.register(self._cleanup)
 
     def detect_faces(self):
         # Capture frame-by-frame
-        # ret, frame = self.video_capture.read()
-        frame = self.video_stream.read()
+        if environment.is_mac():
+            _, frame = self.video_capture.read()
+        else: # raspberry pi
+            frame = self.video_stream.read()
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -53,8 +61,10 @@ class FaceTracking(object):
     def _cleanup(self):
         print('cleaning up')
         # When everything is done, release the capture
-        # self.video_capture.release()
-        self.video_stream.stop()
+        if environment.is_mac():
+            self.video_capture.release()
+        else: # raspberry pi
+            self.video_stream.stop()
         cv2.destroyAllWindows()
 
 if __name__ == '__main__':

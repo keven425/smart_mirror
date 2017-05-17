@@ -24,6 +24,10 @@ body {
     background-color: yellow;
 }
 
+#reset {
+    align-self: flex-end;
+}
+
 @-webkit-keyframes pulsate {
     0% {
         background: black
