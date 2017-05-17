@@ -18,8 +18,6 @@ class FaceTracking(object):
         # Capture frame-by-frame
         ret, frame = self.video_capture.read()
 
-        print(str(frame))
-
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         faces = self.face_cascade.detectMultiScale(
