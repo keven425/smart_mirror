@@ -5,7 +5,7 @@ import cv2
 import sys
 import atexit
 
-CASC_PATH = '/usr/local/opt/opencv/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
+CASC_PATH = '/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'
 
 class FaceTracking(object):
     
