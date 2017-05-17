@@ -35,6 +35,7 @@ class PiVideoStream:
 			# if the thread indicator variable is set, stop the thread
 			# and resource camera resources
 			if self.stopped:
+				print("releasing camera resources")
 				self.stream.close()
 				self.rawCapture.close()
 				self.camera.close()
