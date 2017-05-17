@@ -1,5 +1,6 @@
-# A simple native messaging host. Shows a Tkinter dialog with incoming messages
-# that also allows to send message back to the webapp.
+# code adopted from here:
+# https://realpython.com/blog/python/face-detection-in-python-using-a-webcam/
+
 import cv2
 import sys
 import atexit
