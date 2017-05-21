@@ -20,7 +20,7 @@ $(document).ready(function() {
     });
 
     // set initial state to standby
-    set_view(STATES.STAND_BY);
+    set_view(STATES.DETECTED);
 
     // connect to native python program
     console.log('connecting to nativemain');
@@ -39,21 +39,32 @@ function connect() {
 function set_view(state) {
     view = state;
 
+    if (state === STATES.STAND_BY ||
+        state === STATES.DETECTED) {
+        i = Math.floor(Math.random() * jokes.length);
+        $('.joke').text(jokes[i]);
+    }
+
     for (var i = 0; i < views.length; i++) {
         $('.' + views[i]).hide();
     }
     $('.' + view).show();
 
-    timeout = clearTimeout(timeout);
-    if (view === STATES.DETECTED) {
-        timeout = setTimeout(function() {
-            set_view(STATES.GREETING);
-        }, 3000);
-    } else if (view === STATES.GREETING) {
-        timeout = setTimeout(function() {
-            set_view(STATES.ACTIVATED);
-        }, 3000);
-    }
+    // timeout = clearTimeout(timeout);
+    // if (view === STATES.DETECTED) {
+    //     timeout = setTimeout(function() {
+    //         set_view(STATES.GREETING);
+    //     }, 3000);
+    // } else if (view === STATES.GREETING) {
+    //     timeout = setTimeout(function() {
+    //         set_view(STATES.ACTIVATED);
+    //     }, 3000);
+    // }
+}
+
+function set_circle_size(size) {
+    $('.circle').width(size);
+    $('.circle').height(size);
 }
 
 function appendMessage(text) {

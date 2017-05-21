@@ -10,15 +10,20 @@
 <head>
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='./jokes.js'></script>
     <script src='./main.js'></script>
 </head>
 
 <body>
     <div class="stand_by center">
-        <div class="circle"></div>
-        <div class="circle-outer"></div>
+        <h1 class="joke"></h1>
+        <div class="circle-pulse"></div>
+        <div class="circle-pulse-outer"></div>
     </div>
-    <h1 class="detected center">2. Hello! Come closer</h1>
+    <div class="detected center">
+        <div class="circle"></div>
+        <h1 class="joke"></h1>
+    </div>
     <h1 class="greeting center">3.Gimme a smile!</h1>
     <h1 class="activated center">4. It's 72 F, Sunny</h1>
     <button id="reset">reset</button>

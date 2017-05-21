@@ -4,6 +4,7 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+    background-color: black;
 }
 
 body {
@@ -17,23 +18,39 @@ body {
     flex-grow: 1;
 }
 
-.circle {
+.joke {
+    z-index: 2;
+    font-family: fantasy;
+    color: white;
+    text-align: center;
+}
+
+.circle-pulse {
     position: absolute;
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: #fff28f;
+    background-color: #224f77;
     z-index: 1;
     animation: pulsate 3s linear infinite;
 }
 
-.circle-outer {
+.circle-pulse-outer {
     position: absolute;
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: yellow;
+    background-color: #4dabff;
     animation: pulsate-outer 3s linear infinite;
+}
+
+.circle {
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #224f77;
+    transition: width .2s, height .2s;
 }
 
 #reset {
