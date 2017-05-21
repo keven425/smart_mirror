@@ -20,7 +20,7 @@ $(document).ready(function() {
     });
 
     // set initial state to standby
-    set_view(STATES.DETECTED);
+    set_view(STATES.STAND_BY);
 
     // connect to native python program
     console.log('connecting to nativemain');
