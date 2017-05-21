@@ -17,11 +17,13 @@ class PiVideoStream:
 		# initialize the frame and the variable used to indicate
 		# if the thread should be stopped
 		self.frame = None
+		self.thread = None
 		self.stopped = False
 
 	def start(self):
 		# start the thread to read frames from the video stream
-		Thread(target=self.update, args=()).start()
+		self.thread = Thread(target=self.update, args=())
+		self.thread.start()
 		return self
  
 	def update(self):
@@ -48,3 +50,5 @@ class PiVideoStream:
 	def stop(self):
 		# indicate that the thread should be stopped
 		self.stopped = True
+		self.thread.join()
+		

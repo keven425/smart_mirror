@@ -26,40 +26,44 @@ class FaceTracking(object):
         atexit.register(self._cleanup)
 
     def detect_faces(self):
-        # Capture frame-by-frame
-        if environment.is_mac():
-            _, frame = self.video_capture.read()
-        else: # raspberry pi
-            frame = self.video_stream.read()
+        try:
+            # Capture frame-by-frame
+            if environment.is_mac():
+                _, frame = self.video_capture.read()
+            else: # raspberry pi
+                frame = self.video_stream.read()
 
-        if frame is None:
-            return False # camera might not be ready yet
+            if frame is None:
+                return False # camera might not be ready yet
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        faces = self.face_cascade.detectMultiScale(
-            gray,
-            scaleFactor=1.3,
-            minNeighbors=5,
-            minSize=(30, 30),
-            flags=cv2.CASCADE_SCALE_IMAGE
-        )
+            faces = self.face_cascade.detectMultiScale(
+                gray,
+                scaleFactor=1.3,
+                minNeighbors=5,
+                minSize=(30, 30),
+                flags=cv2.CASCADE_SCALE_IMAGE
+            )
 
-        # Draw a rectangle around the faces
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            # Draw a rectangle around the faces
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
+            # Display the resulting frame
+            cv2.imshow('Video', frame)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            exit(0)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                exit(0)
 
-        # if face detected
-        if (hasattr(faces, 'shape')):
-            return True
+            # if face detected
+            if (hasattr(faces, 'shape')):
+                return True
 
-        return False
+            return False
+        except KeyboardInterrupt:
+            self._cleanup()
+            sys.exit(0)
     
     def _cleanup(self):
         print('cleaning up')
