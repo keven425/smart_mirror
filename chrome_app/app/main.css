@@ -18,10 +18,22 @@ body {
 }
 
 .circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    background-color: #fff28f;
+    z-index: 1;
+    animation: pulsate 3s linear infinite;
+}
+
+.circle-outer {
+    position: absolute;
     border-radius: 50%;
     width: 200px;
     height: 200px;
     background-color: yellow;
+    animation: pulsate-outer 3s linear infinite;
 }
 
 #reset {
@@ -30,21 +42,34 @@ body {
 
 @-webkit-keyframes pulsate {
     0% {
-        background: black
+        width: 200px;
+        height: 200px;
     }
-    20% {
-        background: red
+    25% {
+        width: 250px;
+        height: 250px;
     }
-    40% {
-        background: blue
+}
+
+@-webkit-keyframes pulsate-outer {
+    0% {
+        width: 200px;
+        height: 200px;
+        opacity: 100%;
     }
-    60% {
-        background: orange
+    25% {
+        width: 250px;
+        height: 250px;
+        opacity: 100%;
     }
-    80% {
-        background: green
+    50% {
+        width: 2000px;
+        height: 2000px;
+        opacity: 0;
     }
     100% {
-        background: black
+        width: 200px;
+        height: 200px;
+        opacity: 0;
     }
 }
