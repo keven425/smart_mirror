@@ -30,7 +30,7 @@ import os
 VL53L0X_GOOD_ACCURACY_MODE      = 0   # Good Accuracy mode
 VL53L0X_BETTER_ACCURACY_MODE    = 1   # Better Accuracy mode
 VL53L0X_BEST_ACCURACY_MODE      = 2   # Best Accuracy mode
-VL53L0X_LONG_RANGE_MODE         = 3   # Longe Range mode
+VL53L0X_LONG_RANGE_MODE         = 3   # Long Range mode
 VL53L0X_HIGH_SPEED_MODE         = 4   # High Speed mode
 
 i2cbus = smbus.SMBus(1)
