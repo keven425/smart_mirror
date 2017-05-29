@@ -1,18 +1,35 @@
 #!/usr/bin/env python
 
 import sys
+import time
 from cv.tracking import Tracking
 import chrome_app.chrome_message as chrome_message
+import tof.VL53L0X_rasp_python.python.VL53L0X as VL53L0X
 
 
 if __name__ == '__main__':
 
+    # set up time of flight sensor
+    tof = VL53L0X.VL53L0X()
+    tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+    # timing = tof.get_timing()
+    # if (timing < 20000):
+    #     timing = 20000
+
+    # set up computer vision
     face_detected = False
     tracking = Tracking()
+
+    # main loop
     while True:
         # if !face_detected and face_tracking.detect_faces():
         if tracking.detect():
             face_detected = True
             chrome_message.send_message('{"action": "face_detected"}')
 
+        distance = tof.get_distance()
+        if distance > 0:
+            chrome_message.send_message('{"action": "tof_distance", "distance": %f}' % distance)
+
+    tof.stop_ranging()
     sys.exit(0)
