@@ -17,14 +17,16 @@ if __name__ == '__main__':
     #     timing = 20000
 
     # set up computer vision
-    face_detected = False
     tracking = Tracking()
 
     # main loop
     while True:
         # if !face_detected and face_tracking.detect_faces():
-        if tracking.detect():
-            face_detected = True
+        tracking = Tracking()
+        tracking.detect_face(True)
+        tracking.detect_smile(True)
+        detection = tracking.detect()
+        if detection['face']:
             chrome_message.send_message('{"action": "face_detected"}')
 
         distance = tof.get_distance()

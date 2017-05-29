@@ -5,6 +5,7 @@ import cv2
 import sys
 import atexit
 import environment
+import numpy as np
 
 if environment.is_mac():
     CASC_DIR = '/usr/local/opt/opencv3/share/OpenCV/haarcascades/'
@@ -18,7 +19,7 @@ else: # raspberry pi
 FACE_CASC_PATH = CASC_DIR + 'haarcascade_frontalface_default.xml'
 SMILE_CASC_PATH = CASC_DIR + 'haarcascade_smile.xml'
 # HAND_CASC_PATH = '/Users/Keven/Downloads/fist2.xml'
-HAND_CASC_PATH = '/Users/Keven/Downloads/hand4.xml'
+# HAND_CASC_PATH = '/Users/Keven/Downloads/hand4.xml'
 
 class Tracking(object):
     
@@ -29,7 +30,7 @@ class Tracking(object):
             self.video_stream = PiVideoStream().start()
         self.face_cascade = cv2.CascadeClassifier(FACE_CASC_PATH)
         self.smile_cascade = cv2.CascadeClassifier(SMILE_CASC_PATH)
-        self.hand_cascade = cv2.CascadeClassifier(HAND_CASC_PATH)
+        # self.hand_cascade = cv2.CascadeClassifier(HAND_CASC_PATH)
         self._detect_face = False
         self._detect_smile = False
         atexit.register(self._cleanup)
@@ -58,17 +59,17 @@ class Tracking(object):
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-            hands = self.hand_cascade.detectMultiScale(
-                gray,
-                scaleFactor=1.3,
-                minNeighbors=5,
-                minSize=(30, 30),
-                flags=cv2.CASCADE_SCALE_IMAGE
-            )
-
-            # Draw a rectangle around the faces
-            for (x, y, w, h) in hands:
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            # hands = self.hand_cascade.detectMultiScale(
+            #     gray,
+            #     scaleFactor=1.3,
+            #     minNeighbors=5,
+            #     minSize=(30, 30),
+            #     flags=cv2.CASCADE_SCALE_IMAGE
+            # )
+            #
+            # # Draw a rectangle around the faces
+            # for (x, y, w, h) in hands:
+            #     cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
             if self._detect_face:
                 faces = self.face_cascade.detectMultiScale(
@@ -84,28 +85,34 @@ class Tracking(object):
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
                 # if face detected
-                _return['face'] = hasattr(faces, 'shape')
+                face_detected = hasattr(faces, 'shape')
+                _return['face'] = face_detected
 
-                if self._detect_smile:
+                if face_detected and self._detect_smile:
+                    # detect smile
+                    # pick largest face
+                    faces_area = faces[:, 2] * faces[:, 3]
+                    face = faces[np.argmax(faces_area)]
+
                     # find smile within face
-                    for (x, y, w, h) in faces:
-                        roi_gray = gray[y:y + h, x:x + w]
-                        roi_color = frame[y:y + h, x:x + w]
+                    x, y, w, h = face
+                    roi_gray = gray[y:y + h, x:x + w]
+                    roi_color = frame[y:y + h, x:x + w]
 
-                        smiles = self.smile_cascade.detectMultiScale(
-                            roi_gray,
-                            scaleFactor=1.7,
-                            minNeighbors=22,
-                            minSize=(25, 25),
-                            flags=cv2.CASCADE_SCALE_IMAGE
-                        )
+                    smiles = self.smile_cascade.detectMultiScale(
+                        roi_gray,
+                        scaleFactor=1.7,
+                        minNeighbors=22,
+                        minSize=(25, 25),
+                        flags=cv2.CASCADE_SCALE_IMAGE
+                    )
 
-                        # Set region of interest for smiles
-                        for (x, y, w, h) in smiles:
-                            cv2.rectangle(roi_color, (x, y), (x + w, y + h), (0, 0, 255), 3)
+                    # Set region of interest for smiles
+                    for (x, y, w, h) in smiles:
+                        cv2.rectangle(roi_color, (x, y), (x + w, y + h), (0, 0, 255), 3)
 
-                        # if smile detected
-                        _return['smile'] = hasattr(smiles, 'shape')
+                    # if smile detected
+                    _return['smile'] = hasattr(smiles, 'shape')
 
             # Display the resulting frame
             cv2.imshow('Video', frame)
@@ -129,8 +136,8 @@ class Tracking(object):
 
 if __name__ == '__main__':
     tracking = Tracking()
-    # tracking.detect_face(True)
-    # tracking.detect_smile(True)
+    tracking.detect_face(True)
+    tracking.detect_smile(True)
     while True:
         tracking.detect()
 
