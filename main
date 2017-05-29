@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     # set up time of flight sensor
     tof = VL53L0X.VL53L0X()
-    tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+    tof.start_ranging(VL53L0X.VL53L0X_LONG_RANGE_MODE)
     # timing = tof.get_timing()
     # if (timing < 20000):
     #     timing = 20000
