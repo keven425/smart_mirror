@@ -37,6 +37,7 @@ function connect() {
     port = chrome.runtime.connectNative(hostName);
     port.onMessage.addListener(onNativeMessage);
     port.onDisconnect.addListener(onDisconnected);
+    console.log('connection successful');
 }
 
 function set_view(state) {
