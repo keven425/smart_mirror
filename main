@@ -22,7 +22,6 @@ if __name__ == '__main__':
     # main loop
     while True:
         # if !face_detected and face_tracking.detect_faces():
-        tracking = Tracking()
         tracking.detect_face(True)
         tracking.detect_smile(True)
         detection = tracking.detect()
