@@ -445,6 +445,7 @@ int32_t getDistance(int object_number)
 {
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
     int32_t current_distance = -1;
+    int32_t range_status = -1;
 
     if (object_number < MAX_DEVICES)
     {
@@ -458,7 +459,10 @@ int32_t getDistance(int object_number)
                                     pRangingMeasurementData);
                 if(Status == VL53L0X_ERROR_NONE)
                 {
-                    current_distance = pRangingMeasurementData->RangeMilliMeter;
+                    range_status = pRangingMeasurementData->RangeStatus;
+                    if (range_status == 0) {
+                        current_distance = pRangingMeasurementData->RangeMilliMeter;
+                    }
                 }
 
                 // Clear the interrupt
