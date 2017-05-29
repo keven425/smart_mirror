@@ -26,11 +26,11 @@ if __name__ == '__main__':
         # if !face_detected and face_tracking.detect_faces():
         detection = tracking.detect()
         if detection['face']:
-            chrome_message.send_message('{"action": "face_detected"}')
+            chrome_message.send_message('{"action": "face_detected"}\n')
 
         distance = tof.get_distance()
         if distance > 0:
-            chrome_message.send_message('{"action": "tof_distance", "distance": %f}' % distance)
+            chrome_message.send_message('{"action": "tof_distance", "distance": %f}\n' % distance)
 
     # tof.stop_ranging()
     sys.exit(0)
