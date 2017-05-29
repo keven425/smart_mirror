@@ -18,12 +18,12 @@ if __name__ == '__main__':
 
     # set up computer vision
     tracking = Tracking()
+    tracking.detect_face(True)
+    tracking.detect_smile(True)
 
     # main loop
     while True:
         # if !face_detected and face_tracking.detect_faces():
-        tracking.detect_face(True)
-        tracking.detect_smile(True)
         detection = tracking.detect()
         if detection['face']:
             chrome_message.send_message('{"action": "face_detected"}')
