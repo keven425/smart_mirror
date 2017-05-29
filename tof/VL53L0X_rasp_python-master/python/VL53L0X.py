@@ -25,6 +25,7 @@
 import time
 from ctypes import *
 import smbus
+import os
 
 VL53L0X_GOOD_ACCURACY_MODE      = 0   # Good Accuracy mode
 VL53L0X_BETTER_ACCURACY_MODE    = 1   # Better Accuracy mode
@@ -64,8 +65,10 @@ def i2c_write(address, reg, data_p, length):
 
     return ret_val
 
-# Load VL53L0X shared lib 
-tof_lib = CDLL("../bin/vl53l0x_python.so")
+# Load VL53L0X shared lib
+dir = os.path.dirname(__file__)
+so_path = os.path.join(dir, '../bin/vl53l0x_python.so')
+tof_lib = CDLL(so_path)
 
 # Create read function pointer
 READFUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
