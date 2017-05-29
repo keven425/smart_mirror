@@ -46,6 +46,10 @@ class Tracking(object):
             raise "in order to detect smile, must detect face"
 
         try:
+            _return = {}
+            _return['face'] = False
+            _return['smile'] = False
+
             # Capture frame-by-frame
             if environment.is_mac():
                 _, frame = self.video_capture.read()
@@ -53,9 +57,7 @@ class Tracking(object):
                 frame = self.video_stream.read()
 
             if frame is None:
-                return False # camera might not be ready yet
-
-            _return = {}
+                return _return # camera might not be ready yet
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
