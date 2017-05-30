@@ -99,8 +99,17 @@ function onNativeMessage(message) {
                 set_view(STATES.DETECTED);
             }
             break;
-            // case value2:
-            //     break;
+        case 'tof_distance':
+            if (view === STATES.DETECTED) {
+                distance = parseFloat(message.value);
+                win_height = window.innerHeight
+                // 200mm: 100% height
+                // 1000mm: 0% height
+                circle_size = (1000. - distance) / 800. * win_height;
+                console.log(circle_size);
+                set_circle_size(circle_size);
+            }
+            break;
             // case valueN:
             //     break;
         default:
