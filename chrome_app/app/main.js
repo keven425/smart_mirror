@@ -102,10 +102,10 @@ function onNativeMessage(message) {
         case 'tof_distance':
             if (view === STATES.DETECTED) {
                 distance = parseFloat(message.value);
-                win_height = window.innerHeight
+                win_width = window.innerWidth;
                 // 200mm: 100% height
                 // 1000mm: 0% height
-                circle_size = (1000. - distance) / 800. * win_height;
+                circle_size = (1000. - distance) / 800. * win_width;
                 console.log(circle_size);
                 set_circle_size(circle_size);
             }
