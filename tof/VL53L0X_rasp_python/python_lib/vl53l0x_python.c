@@ -55,7 +55,7 @@ void print_pal_error(VL53L0X_Error Status)
 {
     char buf[VL53L0X_MAX_STRING_LENGTH];
     VL53L0X_GetPalErrorString(Status, buf);
-    printf("API Status: %i : %s\n", Status, buf);
+    fprintf( stderr, "API Status: %i : %s\n", Status, buf);
 }
 
 VL53L0X_Error WaitMeasurementDataReady(VL53L0X_DEV Dev)
@@ -119,7 +119,7 @@ VL53L0X_Error WaitStopCompleted(VL53L0X_DEV Dev)
 
     return Status;
 }
-    
+
 /******************************************************************************
  * @brief   Start Ranging
  * @param   mode - ranging mode
@@ -160,12 +160,12 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
 
     if (TCA9548A_Device < 8)
     {
-        printf ("VL53L0X Start Ranging Object %d Address 0x%02X TCA9548A Device %d TCA9548A Address 0x%02X\n\n",
+        ffprintf( stderr,  stderr, "VL53L0X Start Ranging Object %d Address 0x%02X TCA9548A Device %d TCA9548A Address 0x%02X\n\n",
                     object_number, i2c_address, TCA9548A_Device, TCA9548A_Address);
     }
     else
     {
-        printf ("VL53L0X Start Ranging Object %d Address 0x%02X\n\n", object_number, i2c_address);
+        ffprintf( stderr,  stderr, "VL53L0X Start Ranging Object %d Address 0x%02X\n\n", object_number, i2c_address);
     }
 
     if (mode >= VL53L0X_GOOD_ACCURACY_MODE &&
@@ -190,11 +190,11 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
             // If the requested address is not the default, change it in the device
             if (i2c_address != VL53L0X_DEFAULT_ADDRESS)
             {
-                printf("Setting I2C Address to 0x%02X\n", i2c_address);
+                fprintf( stderr, "Setting I2C Address to 0x%02X\n", i2c_address);
                 // Address requested not default so set the address.
                 // This assumes that the shutdown pin has been controlled
                 // externally to this function.
-                // TODO: Why does this function divide the address by 2? To get 
+                // TODO: Why does this function divide the address by 2? To get
                 // the address we want we have to mutiply by 2 in the call so
                 // it gets set right
                 Status = VL53L0X_SetDeviceAddress(pMyDevice[object_number], (i2c_address * 2));
@@ -215,7 +215,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                         pVersion->minor != VERSION_REQUIRED_MINOR ||
                         pVersion->build != VERSION_REQUIRED_BUILD )
                     {
-                        printf("VL53L0X API Version Warning: Your firmware %d.%d.%d (revision %d). This requires %d.%d.%d.\n",
+                        fprintf( stderr, "VL53L0X API Version Warning: Your firmware %d.%d.%d (revision %d). This requires %d.%d.%d.\n",
                             pVersion->major, pVersion->minor, pVersion->build, pVersion->revision,
                             VERSION_REQUIRED_MAJOR, VERSION_REQUIRED_MINOR, VERSION_REQUIRED_BUILD);
                     }
@@ -227,15 +227,15 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                         Status = VL53L0X_GetDeviceInfo(pMyDevice[object_number], &DeviceInfo);
                         if(Status == VL53L0X_ERROR_NONE)
                         {
-                            printf("VL53L0X_GetDeviceInfo:\n");
-                            printf("Device Name : %s\n", DeviceInfo.Name);
-                            printf("Device Type : %s\n", DeviceInfo.Type);
-                            printf("Device ID : %s\n", DeviceInfo.ProductId);
-                            printf("ProductRevisionMajor : %d\n", DeviceInfo.ProductRevisionMajor);
-                            printf("ProductRevisionMinor : %d\n", DeviceInfo.ProductRevisionMinor);
+                            fprintf( stderr, "VL53L0X_GetDeviceInfo:\n");
+                            fprintf( stderr, "Device Name : %s\n", DeviceInfo.Name);
+                            fprintf( stderr, "Device Type : %s\n", DeviceInfo.Type);
+                            fprintf( stderr, "Device ID : %s\n", DeviceInfo.ProductId);
+                            fprintf( stderr, "ProductRevisionMajor : %d\n", DeviceInfo.ProductRevisionMajor);
+                            fprintf( stderr, "ProductRevisionMinor : %d\n", DeviceInfo.ProductRevisionMinor);
 
                             if ((DeviceInfo.ProductRevisionMajor != 1) && (DeviceInfo.ProductRevisionMinor != 1)) {
-                                printf("Error expected cut 1.1 but found cut %d.%d\n",
+                                fprintf( stderr, "Error expected cut 1.1 but found cut %d.%d\n",
                                         DeviceInfo.ProductRevisionMajor, DeviceInfo.ProductRevisionMinor);
                                 Status = VL53L0X_ERROR_NOT_SUPPORTED;
                             }
@@ -259,7 +259,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                                     if(Status == VL53L0X_ERROR_NONE)
                                     {
                                         // Setup in continuous ranging mode
-                                        Status = VL53L0X_SetDeviceMode(pMyDevice[object_number], VL53L0X_DEVICEMODE_CONTINUOUS_RANGING); 
+                                        Status = VL53L0X_SetDeviceMode(pMyDevice[object_number], VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);
 
                                         if(Status == VL53L0X_ERROR_NONE)
                                         {
@@ -267,7 +267,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                                             switch (mode)
                                             {
                                                 case VL53L0X_BEST_ACCURACY_MODE:
-                                                    printf("VL53L0X_BEST_ACCURACY_MODE\n");
+                                                    fprintf( stderr, "VL53L0X_BEST_ACCURACY_MODE\n");
                                                     if (Status == VL53L0X_ERROR_NONE)
                                                     {
                                                         Status = VL53L0X_SetLimitCheckValue(pMyDevice[object_number],
@@ -282,40 +282,40 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
 
                                                             if (Status == VL53L0X_ERROR_NONE)
                                                             {
-                                                                Status = 
+                                                                Status =
                                                                     VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice[object_number], 200000);
-                                                            } 
+                                                            }
                                                         }
                                                     }
                                                     break;
 
                                                 case VL53L0X_LONG_RANGE_MODE:
-                                                    printf("VL53L0X_LONG_RANGE_MODE\n");
+                                                    fprintf( stderr, "VL53L0X_LONG_RANGE_MODE\n");
                                                     if (Status == VL53L0X_ERROR_NONE)
                                                     {
                                                         Status = VL53L0X_SetLimitCheckValue(pMyDevice[object_number],
                                                                     VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE,
                                                                     (FixPoint1616_t)(0.1*65536));
-                                            
+
                                                         if (Status == VL53L0X_ERROR_NONE)
                                                         {
                                                             Status = VL53L0X_SetLimitCheckValue(pMyDevice[object_number],
                                                                         VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE,
                                                                         (FixPoint1616_t)(60*65536));
-                                                
+
                                                             if (Status == VL53L0X_ERROR_NONE)
                                                             {
-                                                                Status = 
+                                                                Status =
                                                                     VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice[object_number], 33000);
-                                                    
+
                                                                 if (Status == VL53L0X_ERROR_NONE)
                                                                 {
-                                                                    Status = VL53L0X_SetVcselPulsePeriod(pMyDevice[object_number], 
+                                                                    Status = VL53L0X_SetVcselPulsePeriod(pMyDevice[object_number],
                                                                                 VL53L0X_VCSEL_PERIOD_PRE_RANGE, 18);
-                                                    
+
                                                                     if (Status == VL53L0X_ERROR_NONE)
                                                                     {
-                                                                        Status = VL53L0X_SetVcselPulsePeriod(pMyDevice[object_number], 
+                                                                        Status = VL53L0X_SetVcselPulsePeriod(pMyDevice[object_number],
                                                                                     VL53L0X_VCSEL_PERIOD_FINAL_RANGE, 14);
                                                                     }
                                                                 }
@@ -325,7 +325,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                                                     break;
 
                                                 case VL53L0X_HIGH_SPEED_MODE:
-                                                    printf("VL53L0X_HIGH_SPEED_MODE\n");
+                                                    fprintf( stderr, "VL53L0X_HIGH_SPEED_MODE\n");
                                                     if (Status == VL53L0X_ERROR_NONE)
                                                     {
                                                         Status = VL53L0X_SetLimitCheckValue(pMyDevice[object_number],
@@ -340,7 +340,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
 
                                                             if (Status == VL53L0X_ERROR_NONE)
                                                             {
-                                                                Status = 
+                                                                Status =
                                                                     VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice[object_number], 20000);
                                                             }
                                                         }
@@ -348,20 +348,20 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                                                     break;
 
                                                 case VL53L0X_BETTER_ACCURACY_MODE:
-                                                    printf("VL53L0X_BETTER_ACCURACY_MODE\n");
+                                                    fprintf( stderr, "VL53L0X_BETTER_ACCURACY_MODE\n");
                                                     if (Status == VL53L0X_ERROR_NONE)
                                                     {
-                                                        Status = 
+                                                        Status =
                                                             VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice[object_number], 66000);
                                                     }
                                                     break;
 
                                                 case VL53L0X_GOOD_ACCURACY_MODE:
                                                 default:
-                                                    printf("VL53L0X_GOOD_ACCURACY_MODE\n");
+                                                    fprintf( stderr, "VL53L0X_GOOD_ACCURACY_MODE\n");
                                                     if (Status == VL53L0X_ERROR_NONE)
                                                     {
-                                                        Status = 
+                                                        Status =
                                                             VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice[object_number], 33000);
                                                     }
                                                     break;
@@ -373,66 +373,66 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                                             }
                                             else
                                             {
-                                                printf("Set Accuracy\n");
+                                                fprintf( stderr, "Set Accuracy\n");
                                             }
                                         }
                                         else
                                         {
-                                            printf ("Call of VL53L0X_SetDeviceMode\n");
+                                            ffprintf( stderr,  stderr, "Call of VL53L0X_SetDeviceMode\n");
                                         }
                                     }
                                     else
                                     {
-                                        printf ("Call of VL53L0X_PerformRefSpadManagement\n");
+                                        ffprintf( stderr,  stderr, "Call of VL53L0X_PerformRefSpadManagement\n");
                                     }
                                 }
                                 else
                                 {
-                                    printf ("Call of VL53L0X_PerformRefCalibration\n");
+                                    ffprintf( stderr,  stderr, "Call of VL53L0X_PerformRefCalibration\n");
                                 }
                             }
                             else
                             {
-                                printf ("Call of VL53L0X_StaticInit\n");
+                                ffprintf( stderr,  stderr, "Call of VL53L0X_StaticInit\n");
                             }
                         }
                         else
                         {
-                            printf ("Invalid Device Info\n");
+                            ffprintf( stderr,  stderr, "Invalid Device Info\n");
                         }
                     }
                     else
                     {
-                        printf ("Call of VL53L0X_DataInit\n");
+                        ffprintf( stderr,  stderr, "Call of VL53L0X_DataInit\n");
                     }
                 }
                 else
                 {
                     Status = VL53L0X_ERROR_CONTROL_INTERFACE;
-                    printf("Call of VL53L0X_GetVersion\n");
+                    fprintf( stderr, "Call of VL53L0X_GetVersion\n");
                 }
             }
             else
             {
-                printf("Call of VL53L0X_SetAddress\n");
+                fprintf( stderr, "Call of VL53L0X_SetAddress\n");
             }
 
             print_pal_error(Status);
         }
         else
         {
-            printf("Object %d not initialized\n", object_number);
+            fprintf( stderr, "Object %d not initialized\n", object_number);
         }
     }
     else
     {
         if (object_number >= MAX_DEVICES)
         {
-            printf("Max objects Exceeded\n");
+            fprintf( stderr, "Max objects Exceeded\n");
         }
         else
         {
-            printf("Invalid mode %d specified\n", mode);
+            fprintf( stderr, "Invalid mode %d specified\n", mode);
         }
     }
 }
@@ -473,12 +473,12 @@ int32_t getDistance(int object_number)
         }
         else
         {
-            printf("Object %d not initialized\n", object_number);
+            fprintf( stderr, "Object %d not initialized\n", object_number);
         }
     }
     else
     {
-        printf("Invalid object number %d specified\n", object_number);
+        fprintf( stderr, "Invalid object number %d specified\n", object_number);
     }
 
     return current_distance;
@@ -491,8 +491,8 @@ void stopRanging(int object_number)
 {
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 
-    printf ("Call of VL53L0X_StopMeasurement\n");
-    
+    ffprintf( stderr,  stderr, "Call of VL53L0X_StopMeasurement\n");
+
     if (object_number < MAX_DEVICES)
     {
         if (pMyDevice[object_number] != NULL)
@@ -501,7 +501,7 @@ void stopRanging(int object_number)
 
             if(Status == VL53L0X_ERROR_NONE)
             {
-                printf ("Wait Stop to be competed\n");
+                ffprintf( stderr,  stderr, "Wait Stop to be competed\n");
                 Status = WaitStopCompleted(pMyDevice[object_number]);
             }
 
@@ -517,12 +517,12 @@ void stopRanging(int object_number)
         }
         else
         {
-            printf("Object %d not initialized\n", object_number);
+            fprintf( stderr, "Object %d not initialized\n", object_number);
         }
     }
     else
     {
-        printf("Invalid object number %d specified\n", object_number);
+        fprintf( stderr, "Invalid object number %d specified\n", object_number);
     }
 }
 
