@@ -27,11 +27,15 @@ if __name__ == '__main__':
       # if !face_detected and face_tracking.detect_faces():
       detection = tracking.detect()
       if detection['face']:
-          chrome_message.send_message('{"action": "face_detected"}\n')
+        chrome_message.send_message('{"action": "face_detected"}\n')
 
-      distance = tof.get_distance()
+      distance = tof.get_distance() # in mm
       if distance > 0:
-          chrome_message.send_message('{"action": "tof_distance", "distance": %f}\n' % distance)
+        # if far away, tof returns noisy range < 200
+        # simply return a large number
+        if distance < 200.:
+          distance = 999.
+        chrome_message.send_message('{"action": "tof_distance", "distance": %f}\n' % distance)
 
       time.sleep(timing / 1000000.00)
 
