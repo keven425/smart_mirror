@@ -1,23 +1,22 @@
 # code adopted from here:
 # https://realpython.com/blog/python/face-detection-in-python-using-a-webcam/
 
+import os
 import cv2
 import sys
 import atexit
 import environment
 import numpy as np
 
-if environment.is_mac():
-    CASC_DIR = '/usr/local/opt/opencv3/share/OpenCV/haarcascades/'
-else: # raspberry pi
+if not environment.is_mac(): # raspberry pi
     from picamera.array import PiRGBArray
     from picamera import PiCamera
     from camera import PiVideoStream
 
-    CASC_DIR = '/usr/local/share/OpenCV/haarcascades/'
-
-FACE_CASC_PATH = CASC_DIR + 'haarcascade_frontalface_default.xml'
-SMILE_CASC_PATH = CASC_DIR + 'haarcascade_smile.xml'
+dir = os.path.dirname(__file__)
+CASC_DIR = os.path.join(dir, 'cascades')
+FACE_CASC_PATH = os.path.join(CASC_DIR, 'haarcascade_frontalface_default.xml')
+SMILE_CASC_PATH = os.path.join(CASC_DIR, 'haarcascade_smile.xml')
 # HAND_CASC_PATH = '/Users/Keven/Downloads/fist2.xml'
 # HAND_CASC_PATH = '/Users/Keven/Downloads/hand4.xml'
 
