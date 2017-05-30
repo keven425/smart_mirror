@@ -2,7 +2,7 @@ import environment
 import random
 
 if not environment.is_mac():
-  import tof.VL53L0X_rasp_python.python.VL53L0X as VL53L0X
+  import VL53L0X_rasp_python.python.VL53L0X as VL53L0X
 
 class Tof(object):
 
