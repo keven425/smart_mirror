@@ -161,7 +161,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
     if (TCA9548A_Device < 8)
     {
         // printf ("VL53L0X Start Ranging Object %d Address 0x%02X TCA9548A Device %d TCA9548A Address 0x%02X\n\n",
-                    object_number, i2c_address, TCA9548A_Device, TCA9548A_Address);
+//                    object_number, i2c_address, TCA9548A_Device, TCA9548A_Address);
     }
     else
     {
@@ -216,8 +216,8 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
                         pVersion->build != VERSION_REQUIRED_BUILD )
                     {
                         // printf("VL53L0X API Version Warning: Your firmware %d.%d.%d (revision %d). This requires %d.%d.%d.\n",
-                            pVersion->major, pVersion->minor, pVersion->build, pVersion->revision,
-                            VERSION_REQUIRED_MAJOR, VERSION_REQUIRED_MINOR, VERSION_REQUIRED_BUILD);
+//                            pVersion->major, pVersion->minor, pVersion->build, pVersion->revision,
+//                            VERSION_REQUIRED_MAJOR, VERSION_REQUIRED_MINOR, VERSION_REQUIRED_BUILD);
                     }
                     // End of implementation specific
 
@@ -236,7 +236,7 @@ void startRanging(int object_number, int mode, uint8_t i2c_address, uint8_t TCA9
 
                             if ((DeviceInfo.ProductRevisionMajor != 1) && (DeviceInfo.ProductRevisionMinor != 1)) {
                                 // printf("Error expected cut 1.1 but found cut %d.%d\n",
-                                        DeviceInfo.ProductRevisionMajor, DeviceInfo.ProductRevisionMinor);
+//                                        DeviceInfo.ProductRevisionMajor, DeviceInfo.ProductRevisionMinor);
                                 Status = VL53L0X_ERROR_NOT_SUPPORTED;
                             }
                         }
