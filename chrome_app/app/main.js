@@ -10,14 +10,14 @@ var STATES = {
 }
 var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ACTIVATED];
 var view = STATES.STAND_BY;
-var timeout; // change view every 3 seconds
 joke_index = 0;
+joke_t = null; // change joke every 6 seconds
 
 
 $(document).ready(function() {
     // set up listeners
     $('#reset').click(function() {
-        update_joke();
+        display_joke();
         set_view(STATES.STAND_BY);
     });
 
@@ -42,9 +42,13 @@ function connect() {
 function set_view(state) {
     view = state;
 
-    if (state === STATES.STAND_BY ||
-        state === STATES.DETECTED) {
+    if (state === STATES.DETECTED) {
         display_joke();
+        // loop thru jokes, one per 6 seconds
+        joke_t = setInterval(display_joke, 6000);
+    } else if (joke_t) {
+        // reset interval
+        clearInterval(joke_t);
     }
 
     for (var i = 0; i < views.length; i++) {
@@ -59,11 +63,8 @@ function set_circle_size(size) {
 }
 
 function display_joke() {
-    $('.joke').text(jokes[joke_index]);
-}
-
-function update_joke() {
     joke_index = Math.floor(Math.random() * jokes.length);
+    $('.joke').text(jokes[joke_index]);
 }
 
 function appendMessage(text) {
