@@ -36,7 +36,7 @@ body {
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: #ff9b5f;
+    background-color: #c15c20;
     z-index: 1;
     animation: pulsate 3s linear infinite;
 }
@@ -46,7 +46,7 @@ body {
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: #ffaa5f;
+    background-color: #d08355;
     animation: pulsate-outer 3s linear infinite;
 }
 
@@ -55,7 +55,7 @@ body {
     height: 0;
     position: absolute;
     border-radius: 50%;
-    background-color: #ff9b5f;
+    background-color: #c15c20;
     transition: width .2s, height .2s;
 }
 
