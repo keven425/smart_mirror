@@ -5,11 +5,10 @@
 var port = null;
 var STATES = {
     STAND_BY: 'stand_by', // haven't seen face
-    DETECTED: 'detected', // saw user's face, prompt user to walk closer
-    GREETING: 'greeting', // asks user to smile
+    DETECTED: 'detected', // saw user's face, display joke until smile
     ACTIVATED: 'activated' // displaying weather, news
 }
-var views = [STATES.STAND_BY, STATES.DETECTED, STATES.GREETING, STATES.ACTIVATED];
+var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ACTIVATED];
 var view = STATES.STAND_BY;
 var timeout; // change view every 3 seconds
 joke_index = 0;
@@ -52,17 +51,6 @@ function set_view(state) {
         $('.' + views[i]).hide();
     }
     $('.' + view).show();
-
-    // timeout = clearTimeout(timeout);
-    // if (view === STATES.DETECTED) {
-    //     timeout = setTimeout(function() {
-    //         set_view(STATES.GREETING);
-    //     }, 3000);
-    // } else if (view === STATES.GREETING) {
-    //     timeout = setTimeout(function() {
-    //         set_view(STATES.ACTIVATED);
-    //     }, 3000);
-    // }
 }
 
 function set_circle_size(size) {
@@ -97,6 +85,11 @@ function onNativeMessage(message) {
         case 'face_detected':
             if (view === STATES.STAND_BY) {
                 set_view(STATES.DETECTED);
+            }
+            break;
+        case 'smile_detected':
+            if (view === STATES.DETECTED) {
+                set_view(STATES.ACTIVATED);
             }
             break;
         case 'tof_distance':

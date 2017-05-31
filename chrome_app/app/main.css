@@ -10,6 +10,8 @@ body {
 }
 
 body {
+    color: white;
+    text-align: center;
     display: flex;
 }
 
@@ -22,8 +24,11 @@ body {
 
 .joke {
     z-index: 2;
-    color: white;
-    text-align: center;
+}
+
+.activated {
+    flex-grow: 1;
+    align-self: center;
 }
 
 .circle-pulse {
@@ -31,7 +36,7 @@ body {
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: #224f77;
+    background-color: #ff9b5f;
     z-index: 1;
     animation: pulsate 3s linear infinite;
 }
@@ -41,7 +46,7 @@ body {
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background-color: #4dabff;
+    background-color: #ffaa5f;
     animation: pulsate-outer 3s linear infinite;
 }
 
@@ -50,7 +55,7 @@ body {
     height: 0;
     position: absolute;
     border-radius: 50%;
-    background-color: #224f77;
+    background-color: #ff9b5f;
     transition: width .2s, height .2s;
 }
 
