@@ -25,6 +25,8 @@ class Tracking(object):
     def __init__(self):
         if environment.is_mac():
             self.video_capture = cv2.VideoCapture(0)
+            self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640);
+            self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480);
         else: # raspberry pi
             self.video_stream = PiVideoStream().start()
         self.face_cascade = cv2.CascadeClassifier(FACE_CASC_PATH)
