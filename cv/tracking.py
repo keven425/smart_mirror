@@ -101,9 +101,10 @@ class Tracking(object):
 
                 smiles = self.smile_cascade.detectMultiScale(
                     roi_gray,
-                    scaleFactor=1.7,
+                    scaleFactor=1.2,
                     minNeighbors=22,
-                    minSize=(25, 25),
+                    minSize=(15, 15),
+                    maxSize=(80, 80),
                     flags=cv2.CASCADE_SCALE_IMAGE
                 )
 
