@@ -7,6 +7,8 @@ import chrome_app.chrome_message as chrome_message
 from tof.tof import Tof
 
 
+current_milli_time = lambda: int(round(time.time() * 1000))
+
 if __name__ == '__main__':
 
   # set up time of flight sensor
@@ -18,6 +20,10 @@ if __name__ == '__main__':
   tracking.detect_face(True)
   tracking.detect_smile(True)
 
+  SMILE_TIME = 1000 # only trigger, if smile longer than 1000 milliseconds
+  first_smile_t = -1 # time of last smile frame
+
+
   # main loop
   try:
     while True:
@@ -27,7 +33,13 @@ if __name__ == '__main__':
         chrome_message.send_message('{"action": "face_detected"}')
 
       if detection['smile']:
-        chrome_message.send_message('{"action": "smile_detected"}')
+        if first_smile_t < 0: # first smile frame
+          first_smile_t = current_milli_time()
+        elif current_milli_time() - first_smile_t > SMILE_TIME:
+          chrome_message.send_message('{"action": "smile_detected"}')
+      else:
+        # reset first smile time
+        first_smile_t = -1
 
       distance = tof.get_distance() # in mm
       if distance > 0:
