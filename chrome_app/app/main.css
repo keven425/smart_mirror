@@ -10,6 +10,7 @@ body {
 }
 
 body {
+    font-size: 2rem;
     color: white;
     text-align: center;
     display: flex;
@@ -57,6 +58,41 @@ body {
     border-radius: 50%;
     background-color: #c15c20;
     transition: width .2s, height .2s;
+}
+
+.smiles {
+    height: 60vh;
+    display: flex;
+}
+
+.smile-score {
+    width: 33%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.score {
+    margin-top: 2rem;
+}
+
+.smile {
+    flex-grow: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.smile1 {
+    background-image: url(images/smile1.jpg);
+}
+
+.smile2 {
+    background-image: url(images/smile2.jpg);
+}
+
+.smile3 {
+    background-image: url(images/smile3.jpg);
 }
 
 #reset {
