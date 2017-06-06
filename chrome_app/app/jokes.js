@@ -46,7 +46,7 @@ jokes = [
     "What do you call a lonely cheese? Provolone.",
     "Why can't you hear a pterodactyl go to the bathroom? Because the pee is silent.",
     "What does a zombie vegetarian eat? \"GRRRAAAAAIIIINNNNS!\"",
-    "What does an angry pepper do? It gets jalapeño your face.",
+    "What does an angry pepper do? It gets jalapeno your face.",
     "Why wasn't the woman happy with the velcro she bought? It was a total ripoff.",
     "What did the buffalo say to his son when he dropped him off at school? Bison.",
     "What do you call someone with no body and no nose? Nobody knows.",
