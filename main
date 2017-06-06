@@ -20,7 +20,7 @@ if __name__ == '__main__':
   tracking.detect_face(True)
   tracking.detect_smile(True)
 
-  SMILE_TIME = 1000 # only trigger, if smile longer than 1000 milliseconds
+  SMILE_TIME = 500 # only trigger, if smile longer than 1000 milliseconds
   first_smile_t = -1 # time of last smile frame
 
 
