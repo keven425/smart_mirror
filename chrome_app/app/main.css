@@ -80,7 +80,7 @@ body {
     box-sizing: border-box;
     z-index: 2;
     /*background: linear-gradient(135deg, #ff5f00, black);*/
-    border: 1rem solid #ff5f00;
+    border: 1rem solid white;
 }
 
 
