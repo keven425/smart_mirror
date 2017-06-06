@@ -20,6 +20,7 @@ joke_t = null; // change joke every 6 seconds
 var PROPER_DISTANCE = 400.;
 var FURTHEST_DISTANCE = 1000.;
 var DISTANCE_THRESH = 50.;
+var delta_dis_abs = 99999999.;
 
 
 $(document).ready(function() {
@@ -128,7 +129,12 @@ function onNativeMessage(message) {
                 }
                 delta_dis_abs = Math.abs(delta_dis);
                 if (delta_dis_abs < DISTANCE_THRESH) {
-                    set_view(STATES.ENTERTAIN);
+                    // if still at proper distance .5 seconds later, advance view
+                    setTimeout(function() {
+                        if (delta_dis_abs < DISTANCE_THRESH) {
+                            set_view(STATES.ENTERTAIN);
+                        }
+                    }, 500);
                 }
             }
             break;
