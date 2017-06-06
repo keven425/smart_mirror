@@ -60,6 +60,45 @@ body {
     transition: width .2s, height .2s;
 }
 
+.ring {
+    width: 100vh;
+    height: 100vh;
+    position: absolute;
+    border-radius: 50%;
+    box-sizing: border-box;
+    z-index: 1;
+    background: linear-gradient(135deg, #ff5f00, black);
+    border-radius: 50%;
+}
+
+.ring:after {
+    position: absolute;
+    display: block;
+    top: 1rem;
+    left: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+    content: "";
+    background-color: black;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.center-text {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+}
+
+
+/*.move-closer {
+    display: block;
+}*/
+
+.move-further {
+    display: none;
+}
+
 .smiles {
     height: 60vh;
     display: flex;
