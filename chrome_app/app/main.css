@@ -42,6 +42,17 @@ body {
     animation: pulsate 3s linear infinite;
 }
 
+.circle-dance {
+    position: absolute;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    background-color: #c15c20;
+    z-index: 0;
+    animation: dance .75s linear infinite;
+    animation-iteration-count: 1;
+}
+
 .circle-pulse-outer {
     position: absolute;
     border-radius: 50%;
@@ -168,6 +179,24 @@ body {
     100% {
         width: 200px;
         height: 200px;
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes dance {
+    0% {
+        width: 100vh;
+        height: 100vh;
+        opacity: 100%;
+    }
+    50% {
+        width: 0;
+        height: 0;
+        opacity: 100%;
+    }
+    100% {
+        width: 200vw;
+        height: 200vw;
         opacity: 0;
     }
 }

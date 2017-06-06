@@ -12,6 +12,7 @@ var STATES = {
 var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ENTERTAIN, STATES.ACTIVATED];
 var view = STATES.STAND_BY;
 
+var GREETING_MS = 5000;
 var JOKE_INTERVAL_MS = 10000;
 joke_index = 0;
 joke_t = null; // change joke every 6 seconds
@@ -24,7 +25,6 @@ var DISTANCE_THRESH = 50.;
 $(document).ready(function() {
     // set up listeners
     $('#reset').click(function() {
-        display_joke();
         set_view(STATES.STAND_BY);
     });
 
@@ -50,9 +50,11 @@ function set_view(state) {
     view = state;
 
     if (state === STATES.ENTERTAIN) {
-        display_joke();
         // loop thru jokes, one per 6 seconds
-        joke_t = setInterval(display_joke, JOKE_INTERVAL_MS);
+        setTimeout(function() {
+            display_joke();
+            joke_t = setInterval(display_joke, JOKE_INTERVAL_MS);
+        }, GREETING_MS);
     } else if (joke_t) {
         // reset interval
         clearInterval(joke_t);
