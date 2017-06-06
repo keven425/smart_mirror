@@ -17,7 +17,7 @@ var JOKE_INTERVAL_MS = 10000;
 joke_index = 0;
 joke_t = null; // change joke every 6 seconds
 
-var PROPER_DISTANCE = 600.;
+var PROPER_DISTANCE = 400.;
 var FURTHEST_DISTANCE = 1000.;
 var DISTANCE_THRESH = 50.;
 
