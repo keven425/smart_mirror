@@ -5,10 +5,11 @@
 var port = null;
 var STATES = {
     STAND_BY: 'stand_by', // haven't seen face
-    DETECTED: 'detected', // saw user's face, display joke until smile
+    DETECTED: 'detected', // saw user's face, ask to walk closer/further
+    ENTERTAIN: 'entertain', // display joke until smile
     ACTIVATED: 'activated' // displaying weather, news
 }
-var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ACTIVATED];
+var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ENTERTAIN, STATES.ACTIVATED];
 var view = STATES.STAND_BY;
 joke_index = 0;
 joke_t = null; // change joke every 6 seconds
@@ -42,7 +43,7 @@ function connect() {
 function set_view(state) {
     view = state;
 
-    if (state === STATES.DETECTED) {
+    if (state === STATES.ENTERTAIN) {
         display_joke();
         // loop thru jokes, one per 6 seconds
         joke_t = setInterval(display_joke, 6000);
@@ -89,7 +90,7 @@ function onNativeMessage(message) {
             }
             break;
         case 'smile_detected':
-            if (view === STATES.DETECTED) {
+            if (view === STATES.ENTERTAIN) {
                 set_view(STATES.ACTIVATED);
             }
             break;
@@ -99,13 +100,29 @@ function onNativeMessage(message) {
                 win_width = window.innerWidth;
                 // 600mm: 100% height
                 // 1000mm: 0% height
-                circle_size = (1000. - distance) / 400. * win_width;
-                console.log(circle_size);
+                var PROPER_DISTANCE = 600.;
+                var FURTHEST_DISTANCE = 1000.;
+                var DISTANCE_THRESH = 50.;
+                circle_size = (FURTHEST_DISTANCE - distance) / (FURTHEST_DISTANCE - PROPER_DISTANCE) * win_width;
                 set_circle_size(circle_size);
+
+                // if the correct distance, switch to entertainment mode
+                var delta_dis = distance - PROPER_DISTANCE;
+                if (delta_dis > 0) {
+                    // prompt user to move closer
+                    $('.move-closer').show();
+                    $('.move-further').hide();
+                } else {
+                    // prompt user to move further
+                    $('.move-closer').hide();
+                    $('.move-further').show();
+                }
+                delta_dis_abs = Math.abs(delta_dis);
+                if (delta_dis_abs < DISTANCE_THRESH) {
+                    set_view(STATES.ENTERTAIN);
+                }
             }
             break;
-            // case valueN:
-            //     break;
         default:
             break;
     }
