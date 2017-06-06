@@ -79,11 +79,12 @@ body {
     border-radius: 50%;
     box-sizing: border-box;
     z-index: 2;
-    background: linear-gradient(135deg, #ff5f00, black);
-    border-radius: 50%;
+    /*background: linear-gradient(135deg, #ff5f00, black);*/
+    border: 1rem solid #ff5f00;
 }
 
-.ring:after {
+
+/*.ring:after {
     position: absolute;
     display: block;
     top: 1rem;
@@ -95,7 +96,7 @@ body {
     border-radius: 50%;
     overflow: hidden;
     z-index: 0;
-}
+}*/
 
 .center-text {
     position: absolute;
