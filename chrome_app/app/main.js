@@ -131,7 +131,8 @@ function onNativeMessage(message) {
                 if (delta_dis_abs < DISTANCE_THRESH) {
                     // if still at proper distance .5 seconds later, advance view
                     setTimeout(function() {
-                        if (delta_dis_abs < DISTANCE_THRESH) {
+                        if (delta_dis_abs < DISTANCE_THRESH &&
+                            view === STATES.DETECTED) {
                             set_view(STATES.ENTERTAIN);
                         }
                     }, 500);
