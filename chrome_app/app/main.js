@@ -11,8 +11,14 @@ var STATES = {
 }
 var views = [STATES.STAND_BY, STATES.DETECTED, STATES.ENTERTAIN, STATES.ACTIVATED];
 var view = STATES.STAND_BY;
+
+var JOKE_INTERVAL_MS = 10000;
 joke_index = 0;
 joke_t = null; // change joke every 6 seconds
+
+var PROPER_DISTANCE = 600.;
+var FURTHEST_DISTANCE = 1000.;
+var DISTANCE_THRESH = 50.;
 
 
 $(document).ready(function() {
@@ -46,7 +52,7 @@ function set_view(state) {
     if (state === STATES.ENTERTAIN) {
         display_joke();
         // loop thru jokes, one per 6 seconds
-        joke_t = setInterval(display_joke, 6000);
+        joke_t = setInterval(display_joke, JOKE_INTERVAL_MS);
     } else if (joke_t) {
         // reset interval
         clearInterval(joke_t);
@@ -65,7 +71,11 @@ function set_circle_size(size) {
 
 function display_joke() {
     joke_index = Math.floor(Math.random() * jokes.length);
-    $('.joke').text(jokes[joke_index]);
+    $('.joke').fadeOut(250, function() {
+        // fade in & out
+        $('.joke').text(jokes[joke_index]);
+        $('.joke').fadeIn(250);
+    });
 }
 
 function appendMessage(text) {
@@ -100,9 +110,6 @@ function onNativeMessage(message) {
                 win_width = window.innerWidth;
                 // 600mm: 100% height
                 // 1000mm: 0% height
-                var PROPER_DISTANCE = 600.;
-                var FURTHEST_DISTANCE = 1000.;
-                var DISTANCE_THRESH = 50.;
                 circle_size = (FURTHEST_DISTANCE - distance) / (FURTHEST_DISTANCE - PROPER_DISTANCE) * win_width;
                 set_circle_size(circle_size);
 
