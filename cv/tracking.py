@@ -78,7 +78,7 @@ class Tracking(object):
                 gray,
                 scaleFactor=1.3,
                 minNeighbors=5,
-                minSize=(30, 30),
+                minSize=(60, 60),
                 flags=cv2.CASCADE_SCALE_IMAGE
             )
 
@@ -103,10 +103,10 @@ class Tracking(object):
 
                 smiles = self.smile_cascade.detectMultiScale(
                     roi_gray,
-                    scaleFactor=1.2,
-                    minNeighbors=30,
-                    minSize=(15, 15),
-                    maxSize=(80, 80),
+                    scaleFactor=1.3,
+                    minNeighbors=60, # the lower, the more sensitive
+                    minSize=(10, 10),
+                    maxSize=(120, 120),
                     flags=cv2.CASCADE_SCALE_IMAGE
                 )
 
