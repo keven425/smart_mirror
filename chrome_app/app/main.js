@@ -19,7 +19,7 @@ joke_t = null; // change joke every 6 seconds
 
 var PROPER_DISTANCE = 400.;
 var FURTHEST_DISTANCE = 1000.;
-var DISTANCE_THRESH = 50.;
+var DISTANCE_THRESH = 10.;
 
 
 $(document).ready(function() {
